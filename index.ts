@@ -1,10 +1,5 @@
 import { serve } from "https://deno.land/std@0.153.0/http/server.ts";
-import MinecraftProtocol from "https://esm.sh/minecraft-protocol@1.36.1?target=deno&no-dts";
-
-interface MCServerAddr {
-    hostname: string
-    port: number
-}
+import mcping from "https://esm.sh/minecraft-protocol@1.36.1/src/ping?bundle";
 
 class HttpResp {
     body: Record<string, unknown>;
@@ -50,7 +45,7 @@ serve(async (req) => {
 
     let pingResponse = null
     try {
-        pingResponse = await MinecraftProtocol.ping({ host, port })
+        pingResponse = await mcping({ host, port })
     } catch (err) {
         return new Error(500, `Encountered error during ping - ${err.name}: ${err.message}`).build();
     }
