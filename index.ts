@@ -26,7 +26,7 @@ class Error extends HttpResp {
     }
 }
 
-async function handler(req: Request): Promise<Response> {
+function handler(req: Request): Response {
     if (req.method !== 'GET') {
         console.log("NOT OK, not GET");
         return new Error(400, "Method not allowed. Use GET.").build();
@@ -54,7 +54,8 @@ async function handler(req: Request): Promise<Response> {
 
     try {
         console.log("OK await ping");
-        return new HttpResp(await ping({ host, port }), 200).build();
+        return new HttpResp({message: "this would be where the ping results would be..."}, 200).build();
+        //return new HttpResp(await ping({ host, port }), 200).build();
     } catch (err) {
         console.log("NOT OK got error");
         return new Error(500, `Encountered error during ping - ${err.name}: ${err.message}`).build();
